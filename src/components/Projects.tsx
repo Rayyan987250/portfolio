@@ -1,11 +1,13 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import ProjectCard from './ProjectCard';
 import { type Project } from '@/types';
+import { apiService } from '@/lib/api';
 
-// Sample project data - easily add more projects here
-const projects: Project[] = [
+// Fallback project data in case API fails
+const fallbackProjects: Project[] = [
   {
     id: 1,
     name: 'Coming Soon',
@@ -39,6 +41,48 @@ const projects: Project[] = [
 ];
 
 export default function Projects() {
+  const [projects, setProjects] = useState<Project[]>(fallbackProjects);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadProjects = async () => {
+      try {
+        const response = await apiService.getProjects();
+        if (response.success && response.data && Array.isArray(response.data)) {
+          // Transform backend data to frontend format
+          const transformedProjects = response.data.map((project: any) => ({
+            id: project.id,
+            name: project.title || project.name,
+            description: project.description,
+            techStack: project.technologies ? project.technologies.split(',').map((tech: string) => tech.trim()) : [],
+            aiIntegration: project.ai_integration || 'AI Integration',
+            githubUrl: project.github_url || '#',
+            liveUrl: project.live_url || '#',
+            imageUrl: project.image_url,
+            featured: project.featured,
+            status: project.status
+          }));
+          
+          // Only show visible/published projects to public
+          const visibleProjects = transformedProjects.filter((project: any) => 
+            project.status === 'PUBLISHED' || project.status === 'published'
+          );
+          
+          if (visibleProjects.length > 0) {
+            setProjects(visibleProjects);
+          }
+          // If no published projects, keep fallback
+        }
+      } catch (error) {
+        console.warn('Failed to load projects from backend, using fallback data:', error);
+        // Keep fallback data
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProjects();
+  }, []);
   return (
     <section id="projects" className="py-32 bg-aer-bg-secondary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -80,11 +124,17 @@ export default function Projects() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, index) => (
-              <ProjectCard key={project.id} project={project} index={index} />
-            ))}
-          </div>
+          {loading ? (
+            <div className="flex items-center justify-center py-20">
+              <div className="text-aer-text-muted aer-body">Loading projects...</div>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projects.map((project, index) => (
+                <ProjectCard key={project.id} project={project} index={index} />
+              ))}
+            </div>
+          )}
         </motion.div>
       </div>
     </section>

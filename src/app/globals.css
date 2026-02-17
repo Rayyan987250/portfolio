@@ -475,3 +475,60 @@ html.dark body {
   clip: auto;
   white-space: normal;
 }
+/* Custom Slider Styles for Admin Dashboard */
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--aer-bg-tertiary);
+  outline: none;
+  border-radius: 4px;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--aer-accent-gold);
+  cursor: pointer;
+  border-radius: 50%;
+  border: 2px solid var(--aer-bg-primary);
+}
+
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: var(--aer-accent-gold);
+  cursor: pointer;
+  border-radius: 50%;
+  border: 2px solid var(--aer-bg-primary);
+}
+
+/* Admin Form Styles */
+.aer-form-input {
+  background: var(--aer-bg-primary);
+  border: 1px solid var(--aer-border-subtle);
+  color: var(--aer-text-primary);
+  border-radius: 4px;
+  padding: 12px 16px;
+  transition: border-color 0.2s ease;
+}
+
+.aer-form-input:focus {
+  outline: none;
+  border-color: var(--aer-accent-gold);
+}
+
+.aer-form-input::placeholder {
+  color: var(--aer-text-muted);
+}
+
+/* Checkbox Styles */
+input[type="checkbox"] {
+  accent-color: var(--aer-accent-gold);
+}
+
+/* Modal Backdrop */
+.modal-backdrop {
+  backdrop-filter: blur(4px);
+}

@@ -1,12 +1,16 @@
 'use client';
 
 import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import ErrorBoundary from './ErrorBoundary';
 import { initWebVitals, initPerformanceObserver } from '@/lib/analytics';
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const isAdminPage = pathname?.startsWith('/admin');
+
   useEffect(() => {
     // Initialize Web Vitals tracking
     initWebVitals();
@@ -17,9 +21,9 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
   return (
     <ErrorBoundary>
-      <Navbar />
+      {!isAdminPage && <Navbar />}
       <main id="main-content" className="min-h-screen">{children}</main>
-      <Footer />
+      {!isAdminPage && <Footer />}
     </ErrorBoundary>
   );
 }

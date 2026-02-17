@@ -13,9 +13,10 @@ import {
   Cpu,
   GitBranch
 } from 'lucide-react';
+import { apiService } from '@/lib/api';
 
-// Skill data with proficiency levels
-const skillsData = [
+// Fallback skill data with proficiency levels
+const fallbackSkillsData = [
   { name: 'React/Next.js', level: 95 },
   { name: 'TypeScript', level: 92 },
   { name: 'Node.js/Express', level: 88 },
@@ -53,11 +54,37 @@ const skillCategories = [
 
 export default function Skills() {
   const [mounted, setMounted] = useState(false);
+  const [skillsData, setSkillsData] = useState(fallbackSkillsData);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Use setTimeout to avoid the cascading render warning
     const timer = setTimeout(() => setMounted(true), 0);
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    // Load skills from backend
+    const loadSkills = async () => {
+      try {
+        const response = await apiService.getSkills();
+        if (response.success && response.data && Array.isArray(response.data)) {
+          // Transform backend data to chart format
+          const chartData = response.data.map((skill: any) => ({
+            name: skill.name,
+            level: skill.proficiency || skill.level || 80
+          }));
+          setSkillsData(chartData);
+        }
+      } catch (error) {
+        console.warn('Failed to load skills from backend, using fallback data:', error);
+        // Keep fallback data
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadSkills();
   }, []);
 
   // Get current theme for chart styling
@@ -98,7 +125,11 @@ export default function Skills() {
         >
           <div className="aer-card p-8">
             <h3 className="text-2xl aer-headline mb-8 text-center">Proficiency Overview</h3>
-            {mounted && (
+            {loading ? (
+              <div className="flex items-center justify-center h-[300px]">
+                <div className="text-aer-text-muted aer-body">Loading skills...</div>
+              </div>
+            ) : mounted ? (
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={skillsData}>
                   <CartesianGrid
@@ -135,7 +166,7 @@ export default function Skills() {
                   />
                 </BarChart>
               </ResponsiveContainer>
-            )}
+            ) : null}
           </div>
         </motion.div>
 

@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Mail, Send } from 'lucide-react';
 import { env, getSocialLinks } from '@/lib/env';
+import { apiService } from '@/lib/api';
 
 const LinkedInIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-aer-text-secondary">
@@ -22,9 +23,30 @@ const GitHubIcon = () => (
 export default function Contact() {
   const socialLinks = getSocialLinks();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    alert(`Form submission not yet implemented. Please email directly at ${env.email}`);
+    
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get('name') as string,
+      email: formData.get('email') as string,
+      subject: formData.get('subject') as string,
+      message: formData.get('message') as string,
+    };
+
+    try {
+      const response = await apiService.submitContact(data);
+      if (response.success) {
+        alert('Thank you for your message! I\'ll get back to you within 24 hours.');
+        e.currentTarget.reset();
+      } else {
+        throw new Error(response.error || 'Failed to send message');
+      }
+    } catch (error) {
+      console.error('Contact form error:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      alert(`Failed to send message: ${errorMessage}. Please email me directly at ${env.email}`);
+    }
   };
 
   return (
@@ -63,14 +85,15 @@ export default function Contact() {
             <motion.a
               key={social.name}
               href={social.url}
-              target="_blank"
-              rel="noopener noreferrer"
+              target={social.name === 'Email' ? '_self' : '_blank'}
+              rel={social.name === 'Email' ? undefined : 'noopener noreferrer'}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
               whileHover={{ y: -2 }}
-              className="aer-card p-6 text-center group"
+              className="aer-card p-6 text-center group cursor-pointer"
+              title={social.name === 'Email' ? 'Send me an email' : `Visit my ${social.name}`}
             >
               <div className="mb-4 flex justify-center">
                 {social.name === 'Email' && <Mail size={24} className="text-aer-accent-gold" />}

@@ -86,7 +86,7 @@ export function getSocialLinks() {
   return [
     {
       name: 'Email',
-      url: `mailto:${env.email}`,
+      url: `mailto:${env.email}?subject=Portfolio%20Inquiry&body=Hi%20${env.fullName},%0D%0A%0D%0AI%20found%20your%20portfolio%20and%20would%20like%20to%20discuss...`,
       icon: 'Mail',
       display: env.email,
     },
