@@ -39,11 +39,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
   };
 
-  // Prevent flash of unstyled content
-  if (!mounted) {
-    return null;
-  }
-
+  // Always render children - no blank screen
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>
   );

@@ -1,26 +1,37 @@
 import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import ClientLayout from '@/components/ClientLayout';
+import { env } from '@/lib/env';
+
+// Professional font configuration
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
+
+// SF Mono will be loaded via CSS (system font)
 
 export const metadata: Metadata = {
-  title: 'Rayyan Ali | Full-Stack Developer',
-  description: 'Full-stack developer specializing in React/Next.js, Node.js, TypeScript, and AI-powered applications. Building modern, scalable web solutions.',
+  title: `${env.fullName} | ${env.title}`,
+  description: env.siteDescription,
   keywords: 'Full-Stack Developer, React, Next.js, TypeScript, Node.js, AI Development, Web Development, Portfolio',
-  authors: [{ name: 'Rayyan Ali' }],
-  creator: 'Rayyan Ali',
+  authors: [{ name: env.fullName }],
+  creator: env.fullName,
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://rayyanali.dev',
-    title: 'Rayyan Ali | Full-Stack Developer',
-    description: 'Full-stack developer specializing in React/Next.js, Node.js, TypeScript, and AI-powered applications.',
-    siteName: 'Rayyan Ali Portfolio',
+    url: env.siteUrl,
+    title: `${env.fullName} | ${env.title}`,
+    description: env.siteDescription,
+    siteName: env.siteName,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Rayyan Ali | Full-Stack Developer',
-    description: 'Full-stack developer specializing in React/Next.js, Node.js, TypeScript, and AI-powered applications.',
+    title: `${env.fullName} | ${env.title}`,
+    description: env.siteDescription,
   },
   robots: {
     index: true,
@@ -44,14 +55,15 @@ export const viewport = {
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'Person',
-  name: 'Rayyan Ali',
-  jobTitle: 'Full-Stack Developer',
-  description: 'Full-stack developer specializing in React/Next.js, Node.js, TypeScript, and AI-powered applications.',
-  url: 'https://rayyanali.dev',
+  name: env.fullName,
+  jobTitle: env.title,
+  description: env.siteDescription,
+  url: env.siteUrl,
   sameAs: [
-    'https://www.linkedin.com/in/rayyan-ali-a57428259',
-    'https://github.com/Rayyan987250',
-  ],
+    env.linkedin,
+    env.github,
+    ...(env.twitter ? [env.twitter] : []),
+  ].filter(Boolean),
   knowsAbout: [
     'React',
     'Next.js',
@@ -64,7 +76,7 @@ const structuredData = {
     'PostgreSQL',
     'MongoDB',
   ],
-  email: 'rayyanali24792@gmail.com',
+  email: env.email,
   alumniOf: {
     '@type': 'Organization',
     name: 'Software Development',
@@ -101,7 +113,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="antialiased bg-background text-foreground">
+      <body className={`${inter.variable} antialiased bg-background text-foreground`}>
         {/* Skip Navigation Link for Accessibility */}
         <a 
           href="#main-content" 

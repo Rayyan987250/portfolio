@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { env } from '@/lib/env';
 
 // Terminal lines data - moved outside component to prevent re-creation
 const terminalLines = [
@@ -140,9 +141,9 @@ export default function Hero() {
                 <p className="aer-ui-text text-aer-text-muted"></p>
               </div>
               <h1 className="text-6xl md:text-7xl lg:text-8xl aer-headline leading-none">
-                RAYYAN
+                {env.fullName.split(' ')[0].toUpperCase()}
                 <br />
-                <span className="aer-gold-gradient">ALI</span>
+                <span className="aer-gold-gradient">{env.fullName.split(' ')[1]?.toUpperCase() || ''}</span>
               </h1>
             </motion.div>
 
@@ -152,7 +153,7 @@ export default function Hero() {
               className="space-y-6"
             >
               <h2 className="text-xl md:text-2xl aer-ui-text text-aer-accent-gold">
-                FULL-STACK DEVELOPER
+                {env.title.toUpperCase()}
               </h2>
               
               <div className="space-y-4 max-w-lg">
@@ -173,16 +174,22 @@ export default function Hero() {
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
               className="flex flex-wrap gap-6 pt-8"
             >
-              <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
-                <button className="aer-button-primary px-10 py-4 rounded-none">
-                  <a href="#projects">VIEW WORK</a>
-                </button>
-              </motion.div>
-              <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
-                <button className="aer-button-secondary px-10 py-4 rounded-none">
-                  <a href="#contact">GET IN TOUCH</a>
-                </button>
-              </motion.div>
+              <motion.a 
+                href="#projects"
+                whileHover={{ y: -2 }} 
+                whileTap={{ scale: 0.98 }}
+                className="aer-button-primary px-10 py-4 rounded-none inline-block text-center"
+              >
+                VIEW WORK
+              </motion.a>
+              <motion.a 
+                href="#contact"
+                whileHover={{ y: -2 }} 
+                whileTap={{ scale: 0.98 }}
+                className="aer-button-secondary px-10 py-4 rounded-none inline-block text-center"
+              >
+                GET IN TOUCH
+              </motion.a>
             </motion.div>
           </motion.div>
 
@@ -215,7 +222,7 @@ export default function Hero() {
                     </div>
 
                     {/* Terminal Content */}
-                    <div className="p-4 font-mono text-sm leading-relaxed">
+                    <div className="p-4 font-mono text-sm leading-relaxed" style={{ fontFamily: 'var(--font-sf-mono)' }}>
                       <TerminalAnimation />
                     </div>
                   </motion.div>

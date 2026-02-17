@@ -1,7 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import ProjectCard, { Project } from './ProjectCard';
+import ProjectCard from './ProjectCard';
+import { type Project } from '@/types';
 
 // Sample project data - easily add more projects here
 const projects: Project[] = [

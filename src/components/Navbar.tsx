@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Moon, Sun } from 'lucide-react';
-import { useTheme } from './ThemeProvider';
+import { Menu, X } from 'lucide-react';
+import { env } from '@/lib/env';
+import ThemeToggle from './ThemeToggle';
 
 const navLinks = [
   { name: 'Home', href: '#home' },
@@ -16,7 +17,6 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     // Use setTimeout to avoid the cascading render warning
@@ -52,7 +52,7 @@ export default function Navbar() {
             className="text-xl font-bold aer-headline"
           >
             <a href="#home" className="aer-logo-underline text-aer-text-primary">
-              RAYYAN ALI
+              {env.fullName.toUpperCase()}
             </a>
           </motion.div>
 
@@ -70,30 +70,12 @@ export default function Navbar() {
               </motion.div>
             ))}
             <div className="w-px h-6 bg-aer-border-subtle mx-4" role="separator" aria-hidden="true" />
-            {mounted && (
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <button
-                  className="p-2 border border-aer-border-subtle hover:border-aer-accent-gold transition-colors"
-                  onClick={toggleTheme}
-                  aria-label="Toggle theme"
-                >
-                  {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-                </button>
-              </motion.div>
-            )}
+            {mounted && <ThemeToggle />}
           </nav>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center space-x-2">
-            {mounted && (
-              <button 
-                className="p-2 border border-aer-border-subtle hover:border-aer-accent-gold transition-colors" 
-                onClick={toggleTheme} 
-                aria-label="Toggle theme"
-              >
-                {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-              </button>
-            )}
+            {mounted && <ThemeToggle className="scale-90" />}
             <button
               className="p-2 border border-aer-border-subtle hover:border-aer-accent-gold transition-colors"
               onClick={() => setIsOpen(!isOpen)}

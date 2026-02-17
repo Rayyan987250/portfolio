@@ -1,4 +1,4 @@
-// Type definitions for the portfolio project
+// Global type definitions for the portfolio
 
 export interface Project {
   id: number;
@@ -11,4 +11,20 @@ export interface Project {
   image?: string;
 }
 
-export type Theme = 'light' | 'dark';
+export interface SkillData {
+  name: string;
+  level: number;
+}
+
+export interface SkillCategory {
+  title: string;
+  icon: string;
+  skills: string[];
+}
+
+export interface SocialLink {
+  name: string;
+  url: string;
+  icon: string;
+  display: string;
+}

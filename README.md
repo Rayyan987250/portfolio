@@ -1,112 +1,87 @@
-# 🚀 Rayyan Ali - Portfolio
+# Rayyan Ali - Portfolio
 
-A modern, responsive portfolio website built with Next.js 16, TypeScript, Tailwind CSS, and Framer Motion.
+A modern, professional portfolio website built with Next.js, TypeScript, and the Aer luxury design system.
 
-## ✨ Features
+## 🚀 Quick Start
 
-- 🌓 Dark/Light theme with system preference detection
-- 🎨 Professional blue-gray color scheme
-- ⚡ Smooth animations and transitions
-- 📱 Fully responsive design
-- ♿ Accessible (WCAG 2.1 AA compliant)
-- 🔍 SEO optimized
-- 🎯 Type-safe with TypeScript
-- 🚀 Production ready
+### Option 1: Automatic Installation (Recommended)
 
-## 🏃 Quick Start
+**Windows:**
+```bash
+install.bat
+```
+
+**Mac/Linux:**
+```bash
+chmod +x install.sh
+./install.sh
+```
+
+### Option 2: Manual Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/Rayyan987250/portfolio.git
+cd portfolio
+
 # Install dependencies
 npm install
 
+# Set up environment variables
+cp .env.example .env.local
+# Edit .env.local with your information
+
 # Start development server
 npm run dev
-
-# Open http://localhost:3000
 ```
+
+## 🔧 Environment Setup
+
+1. Copy `.env.example` to `.env.local`
+2. Update these variables with your information:
+   - `NEXT_PUBLIC_EMAIL` - Your email address
+   - `NEXT_PUBLIC_GITHUB_URL` - Your GitHub profile
+   - `NEXT_PUBLIC_LINKEDIN_URL` - Your LinkedIn profile
+   - `NEXT_PUBLIC_FULL_NAME` - Your full name
+
+## 📋 Requirements
+
+- Node.js 18+ 
+- npm 9+
+- Git
+
+## 🛠️ Available Commands
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
 
 ## 📚 Documentation
 
-For complete documentation, see **[DOCUMENTATION.md](./DOCUMENTATION.md)**
+For detailed information about dependencies, architecture, and deployment, see [DEPENDENCIES.md](./DEPENDENCIES.md).
 
-Includes:
-- Project architecture
-- Component guide
-- Styling system
-- Common tasks
-- Deployment guide
-- Troubleshooting
-- Maintenance tips
+## 🎨 Features
 
-## 🛠️ Tech Stack
-
-- **Framework:** Next.js 16.1.6 (App Router)
-- **Language:** TypeScript 5
-- **Styling:** Tailwind CSS v4
-- **UI Components:** Shadcn/UI
-- **Animations:** Framer Motion
-- **Charts:** Recharts
-- **Icons:** Lucide React
-
-## 📦 Project Structure
-
-```
-src/
-├── app/              # Next.js App Router
-├── components/       # React components
-│   └── ui/          # Shadcn/UI components
-├── lib/             # Utilities
-└── types/           # TypeScript types
-```
+- ✅ Next.js 16 with App Router
+- ✅ TypeScript for type safety
+- ✅ Aer luxury design system
+- ✅ Professional terminal animation
+- ✅ SEO optimized with structured data
+- ✅ Accessibility compliant (WCAG 2.1 AA)
+- ✅ Performance monitoring
+- ✅ Responsive design
+- ✅ Error boundaries
 
 ## 🚀 Deployment
 
-### Vercel (Recommended)
-```bash
-npm i -g vercel
-vercel --prod
-```
+The easiest way to deploy is using [Vercel](https://vercel.com):
 
-### Manual Build
-```bash
-npm run build
-npm run start
-```
-
-## 📝 Common Tasks
-
-### Add New Project
-Edit `src/components/Projects.tsx`:
-```typescript
-const projects = [
-  {
-    id: 4,
-    name: 'Project Name',
-    description: 'Description',
-    techStack: ['React', 'Node.js'],
-    githubUrl: 'https://github.com/...',
-    liveUrl: 'https://...'
-  }
-];
-```
-
-### Update Skills
-Edit `src/components/Skills.tsx` - Update `skillsData` and `skillCategories` arrays.
-
-### Change Contact Info
-Edit `src/components/Contact.tsx` - Update `socialLinks` array.
-
-## 📞 Contact
-
-**Rayyan Ali**  
-📧 rayyanali24792@gmail.com  
-💼 [LinkedIn](https://www.linkedin.com/in/rayyan-ali-a57428259)  
-🐙 [GitHub](https://github.com/Rayyan987250)
-
-## 📄 License
-
-Private and proprietary.
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Add your environment variables in Vercel dashboard
+4. Deploy!
 
 ---
 
-**For detailed documentation, see [DOCUMENTATION.md](./DOCUMENTATION.md)**
+Built with ❤️ using modern web technologies.

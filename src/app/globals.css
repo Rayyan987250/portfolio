@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
+/* Professional Font Configuration */
+:root {
+  --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  --font-sf-mono: 'SF Mono', ui-monospace, 'Monaco', 'Cascadia Code', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro', 'Fira Code', 'Droid Sans Mono', 'Courier New', monospace;
+}
+
 /* Aer Minimalist Dark Luxury Theme */
 :root {
-  /* Aer Color Palette */
+  /* Aer Dark Mode Colors */
   --aer-bg-primary: #0A0A0A;
   --aer-bg-secondary: #141414;
   --aer-bg-tertiary: #1A1A1A;
@@ -13,7 +19,7 @@
   --aer-accent-gold-hover: #D4B978;
   --aer-border-subtle: #262626;
   
-  /* Shadcn/UI compatibility */
+  /* Shadcn/UI compatibility - Dark Mode */
   --background: #0A0A0A;
   --foreground: #FFFFFF;
   --card: #141414;
@@ -33,6 +39,42 @@
   --border: #262626;
   --input: #141414;
   --ring: #C9A962;
+  --radius: 0rem;
+}
+
+/* Aer Light Mode Theme */
+:root.light {
+  /* Aer Light Mode Colors */
+  --aer-bg-primary: #FAFAFA;
+  --aer-bg-secondary: #FFFFFF;
+  --aer-bg-tertiary: #F5F5F5;
+  --aer-text-primary: #0A0A0A;
+  --aer-text-secondary: #4B5563;
+  --aer-text-muted: #6B7280;
+  --aer-accent-gold: #B8860B;
+  --aer-accent-gold-hover: #A0750A;
+  --aer-border-subtle: #E5E7EB;
+  
+  /* Shadcn/UI compatibility - Light Mode */
+  --background: #FAFAFA;
+  --foreground: #0A0A0A;
+  --card: #FFFFFF;
+  --card-foreground: #0A0A0A;
+  --popover: #FFFFFF;
+  --popover-foreground: #0A0A0A;
+  --primary: #B8860B;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F5F5F5;
+  --secondary-foreground: #0A0A0A;
+  --muted: #F5F5F5;
+  --muted-foreground: #6B7280;
+  --accent: #B8860B;
+  --accent-foreground: #FFFFFF;
+  --destructive: #DC2626;
+  --destructive-foreground: #FFFFFF;
+  --border: #E5E7EB;
+  --input: #FFFFFF;
+  --ring: #B8860B;
   --radius: 0rem;
 }
 
@@ -68,6 +110,15 @@
     transform: translateY(-1px);
   }
   
+  /* Light mode button shadow */
+  :root.light .aer-button-primary {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+  
+  :root.light .aer-button-primary:hover {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  }
+  
   .aer-button-secondary {
     background: transparent;
     color: var(--aer-text-primary);
@@ -96,12 +147,22 @@
     box-shadow: 0 0 0 1px var(--aer-accent-gold);
   }
   
+  /* Light mode input shadow */
+  :root.light .aer-input {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+  
+  :root.light .aer-input:focus {
+    box-shadow: 0 0 0 1px var(--aer-accent-gold), 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+  
   .aer-input::placeholder {
     color: var(--aer-text-muted);
   }
   
   /* Typography */
   .aer-headline {
+    font-family: var(--font-inter);
     font-weight: 700;
     letter-spacing: -0.02em;
     color: var(--aer-text-primary);
@@ -109,12 +170,14 @@
   }
   
   .aer-body {
+    font-family: var(--font-inter);
     font-weight: 400;
     line-height: 1.6;
     color: var(--aer-text-secondary);
   }
   
   .aer-ui-text {
+    font-family: var(--font-inter);
     font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -122,7 +185,7 @@
   }
   
   .aer-numeral {
-    font-family: 'JetBrains Mono', 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+    font-family: var(--font-sf-mono);
     font-weight: 400;
   }
   
@@ -229,6 +292,15 @@
     align-items: start;
   }
   
+  /* Light mode shadow enhancements */
+  :root.light .aer-card {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  }
+  
+  :root.light .aer-card:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
   /* Responsive grid adjustments */
   @media (max-width: 1280px) {
     .aer-offset-grid,
@@ -285,12 +357,28 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Professional font rendering optimizations - Apple aesthetic */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Enhanced font smoothing for SF Mono */
+.font-mono,
+.aer-numeral,
+[style*="font-family: var(--font-sf-mono)"] {
+  -webkit-font-smoothing: subpixel-antialiased;
+  font-feature-settings: "liga" 1, "calt" 1;
+}
+
 /* Force background colors - Aer theme */
 html,
 body {
   min-height: 100vh;
-  background-color: #fafafa;
-  color: #171717;
+  background-color: #FAFAFA;
+  color: #0A0A0A;
+  font-family: var(--font-inter);
 }
 
 html.dark,
@@ -317,16 +405,33 @@ html.dark body {
   background: var(--aer-accent-gold-hover);
 }
 
+/* Light mode scrollbar */
+:root.light ::-webkit-scrollbar-track {
+  background: var(--aer-bg-tertiary);
+}
+
 /* Selection color */
 ::selection {
   background: var(--aer-accent-gold);
   color: var(--aer-bg-primary);
 }
 
+/* Light mode selection */
+:root.light ::selection {
+  background: var(--aer-accent-gold);
+  color: #FFFFFF;
+}
+
 /* Focus styles */
 *:focus-visible {
   outline: 2px solid var(--aer-accent-gold);
   outline-offset: 2px;
+}
+
+/* Theme Toggle Focus Override */
+.theme-toggle:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--aer-accent-gold);
 }
 
 /* Accessibility - Reduced Motion Support */

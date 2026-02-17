@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { env } from '@/lib/env';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -41,18 +42,21 @@ export default function Footer() {
                 <p className="aer-body">
                   Ready to collaborate on your next project?
                 </p>
-                <motion.div whileHover={{ y: -1 }} whileTap={{ scale: 0.98 }}>
-                  <button className="aer-button-primary px-6 py-3 rounded-none">
-                    <a href="#contact">START A PROJECT</a>
-                  </button>
-                </motion.div>
+                <motion.a 
+                  href="#contact"
+                  whileHover={{ y: -1 }} 
+                  whileTap={{ scale: 0.98 }}
+                  className="aer-button-primary px-6 py-3 rounded-none inline-block text-center"
+                >
+                  START A PROJECT
+                </motion.a>
               </div>
             </div>
 
             {/* Brand */}
             <div className="space-y-6">
               <h3 className="text-3xl aer-headline aer-gold-gradient">
-                RAYYAN ALI
+                {env.fullName.toUpperCase()}
               </h3>
               <p className="aer-body max-w-md">
                 Building modern web applications with AI-powered features and scalable architecture. 
@@ -70,7 +74,7 @@ export default function Footer() {
           {/* Bottom Section */}
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-8">
-              <p className="text-sm aer-body">© {currentYear} Rayyan Ali. All rights reserved.</p>
+              <p className="text-sm aer-body">© {currentYear} {env.fullName}. All rights reserved.</p>
               <span className="aer-numeral text-aer-text-muted text-sm">v2.0</span>
             </div>
 

@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Mail, Send } from 'lucide-react';
+import { env, getSocialLinks } from '@/lib/env';
 
 const LinkedInIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-aer-text-secondary">
@@ -18,28 +19,12 @@ const GitHubIcon = () => (
   </svg>
 );
 
-const socialLinks = [
-  {
-    name: 'Email',
-    icon: <Mail size={24} className="text-aer-accent-gold" />,
-    href: 'mailto:rayyanali24792@gmail.com',
-  },
-  {
-    name: 'LinkedIn',
-    icon: <LinkedInIcon />,
-    href: 'https://www.linkedin.com/in/rayyan-ali-a57428259',
-  },
-  {
-    name: 'GitHub',
-    icon: <GitHubIcon />,
-    href: 'https://github.com/Rayyan987250',
-  },
-];
-
 export default function Contact() {
+  const socialLinks = getSocialLinks();
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    alert('Form submission not yet implemented. Please email directly at rayyanali24792@gmail.com');
+    alert(`Form submission not yet implemented. Please email directly at ${env.email}`);
   };
 
   return (
@@ -77,7 +62,7 @@ export default function Contact() {
           {socialLinks.map((social, index) => (
             <motion.a
               key={social.name}
-              href={social.href}
+              href={social.url}
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}
@@ -88,13 +73,13 @@ export default function Contact() {
               className="aer-card p-6 text-center group"
             >
               <div className="mb-4 flex justify-center">
-                {social.icon}
+                {social.name === 'Email' && <Mail size={24} className="text-aer-accent-gold" />}
+                {social.name === 'LinkedIn' && <LinkedInIcon />}
+                {social.name === 'GitHub' && <GitHubIcon />}
               </div>
               <h3 className="aer-ui-text text-aer-text-primary mb-2">{social.name.toUpperCase()}</h3>
               <p className="text-sm aer-body group-hover:text-aer-accent-gold transition-colors">
-                {social.name === 'Email' ? 'rayyanali24792@gmail.com' : 
-                 social.name === 'LinkedIn' ? 'Connect with me' : 
-                 'View my work'}
+                {social.display}
               </p>
             </motion.a>
           ))}

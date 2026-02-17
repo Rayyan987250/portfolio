@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next';
+import { env } from '@/lib/env';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = 'https://rayyanali.dev'; // Replace with your actual domain
+  const baseUrl = env.siteUrl;
 
   return {
     rules: {

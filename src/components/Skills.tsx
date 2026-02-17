@@ -3,6 +3,16 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { 
+  Monitor, 
+  Server, 
+  Brain, 
+  Wrench,
+  Code2,
+  Database,
+  Cpu,
+  GitBranch
+} from 'lucide-react';
 
 // Skill data with proficiency levels
 const skillsData = [
@@ -17,22 +27,26 @@ const skillsData = [
 const skillCategories = [
   {
     title: 'Frontend',
-    icon: '🎨',
-    skills: ['React / Next.js', 'Remix', 'React Native','TypeScript', 'Tailwind CSS', 'Framer Motion'],
+    icon: Monitor,
+    iconColor: 'text-blue-400',
+    skills: ['React / Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
   },
   {
     title: 'Backend',
-    icon: '⚙️',
-    skills: ['Node.js / Express', 'RestAPI' ,'GraphQL', 'Prisma', 'PostgreSQL', 'MongoDB', 'FireBase'],
+    icon: Server,
+    iconColor: 'text-green-400',
+    skills: ['Node.js / Express', 'PostgreSQL', 'MongoDB'],
   },
   {
     title: 'AI / Agentic Workflows',
-    icon: '🤖',
+    icon: Brain,
+    iconColor: 'text-purple-400',
     skills: ['LangChain', 'LangGraph'],
   },
   {
     title: 'Tools',
-    icon: '🛠️',
+    icon: Wrench,
+    iconColor: 'text-orange-400',
     skills: ['Git', 'Docker', 'AWS', 'Vercel', 'Figma'],
   },
 ];
@@ -45,6 +59,10 @@ export default function Skills() {
     const timer = setTimeout(() => setMounted(true), 0);
     return () => clearTimeout(timer);
   }, []);
+
+  // Get current theme for chart styling
+  const isDark = typeof window !== 'undefined' ? 
+    document.documentElement.classList.contains('dark') : true;
 
   return (
     <section id="skills" className="py-32 bg-aer-bg-primary">
@@ -85,34 +103,34 @@ export default function Skills() {
                 <BarChart data={skillsData}>
                   <CartesianGrid
                     strokeDasharray="1 1"
-                    stroke="#262626"
+                    stroke={isDark ? "#262626" : "#E5E7EB"}
                     opacity={0.3}
                   />
                   <XAxis 
                     dataKey="name" 
-                    stroke="#9CA3AF"
-                    style={{ fontSize: '11px', fontFamily: 'monospace' }}
-                    tick={{ fill: '#9CA3AF' }}
+                    stroke={isDark ? "#9CA3AF" : "#6B7280"}
+                    style={{ fontSize: '11px', fontFamily: 'var(--font-inter)' }}
+                    tick={{ fill: isDark ? '#9CA3AF' : '#6B7280' }}
                   />
                   <YAxis 
-                    stroke="#9CA3AF"
-                    style={{ fontSize: '11px', fontFamily: 'monospace' }}
-                    tick={{ fill: '#9CA3AF' }}
+                    stroke={isDark ? "#9CA3AF" : "#6B7280"}
+                    style={{ fontSize: '11px', fontFamily: 'var(--font-sf-mono)' }}
+                    tick={{ fill: isDark ? '#9CA3AF' : '#6B7280' }}
                   />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: '#141414',
-                      border: '1px solid #262626',
+                      backgroundColor: isDark ? '#141414' : '#FFFFFF',
+                      border: `1px solid ${isDark ? '#262626' : '#E5E7EB'}`,
                       borderRadius: '0',
-                      boxShadow: 'none',
-                      color: '#FFFFFF',
-                      fontFamily: 'monospace',
+                      boxShadow: isDark ? 'none' : '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                      color: isDark ? '#FFFFFF' : '#0A0A0A',
+                      fontFamily: 'var(--font-inter)',
                       fontSize: '12px'
                     }}
                   />
                   <Bar 
                     dataKey="level" 
-                    fill="#C9A962" 
+                    fill={isDark ? "#C9A962" : "#B8860B"}
                     radius={[0, 0, 0, 0]}
                   />
                 </BarChart>
@@ -123,19 +141,25 @@ export default function Skills() {
 
         {/* Skill Categories */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {skillCategories.map((category, index) => (
-            <motion.div
-              key={category.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-            >
-              <div className="aer-card h-full p-6">
+          {skillCategories.map((category, index) => {
+            const IconComponent = category.icon;
+            return (
+              <motion.div
+                key={category.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="aer-card h-full p-6 group hover:bg-aer-bg-tertiary transition-colors duration-300"
+              >
                 <div className="mb-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="text-2xl">{category.icon}</span>
+                    <div className={`p-2 rounded-sm bg-aer-bg-tertiary group-hover:bg-aer-bg-primary transition-colors duration-300`}>
+                      <IconComponent 
+                        className={`w-5 h-5 ${category.iconColor} group-hover:text-aer-accent-gold transition-colors duration-300`}
+                        strokeWidth={1.5}
+                      />
+                    </div>
                     <h3 className="aer-headline text-lg">
                       {category.title.toUpperCase()}
                     </h3>
@@ -143,23 +167,18 @@ export default function Skills() {
                 </div>
                 <div className="space-y-3">
                   {category.skills.map((skill) => (
-                    <motion.div
+                    <div
                       key={skill}
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      whileHover={{ x: 5 }}
-                      transition={{ duration: 0.2 }}
-                      className="flex items-center justify-between py-2 border-b border-aer-border-subtle last:border-b-0"
+                      className="flex items-center justify-between py-2 border-b border-aer-border-subtle last:border-b-0 group-hover:border-aer-accent-gold/20 transition-colors duration-300"
                     >
                       <span className="text-sm aer-body">{skill}</span>
-                      <div className="w-2 h-2 bg-aer-accent-gold" />
-                    </motion.div>
+                      <div className="w-2 h-2 bg-aer-accent-gold opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
+                    </div>
                   ))}
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
