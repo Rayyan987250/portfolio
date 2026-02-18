@@ -18,32 +18,21 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       whileHover={{ y: -5, transition: { duration: 0.2 } }}
     >
       <div className="aer-card h-full overflow-hidden">
-        {/* Project Image/Placeholder */}
-        <div className="relative h-64 bg-aer-bg-tertiary overflow-hidden" role="img" aria-label={`${project.name} project thumbnail`}>
-          {project.image ? (
-            <div className="w-full h-full bg-aer-bg-tertiary flex items-center justify-center">
-              <div className="text-center">
-                <span className="aer-numeral text-6xl text-aer-accent-gold/30">
-                  {String(project.id).padStart(2, '0')}
-                </span>
-                <p className="aer-ui-text text-aer-text-muted mt-2">
-                  {project.name.toUpperCase()}
-                </p>
+        {/* Project Header - No Image */}
+        <div className="relative h-48 bg-gradient-to-br from-aer-bg-tertiary to-aer-bg-primary overflow-hidden border-b border-aer-border-subtle">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-center px-6">
+              <div className="w-16 h-16 mx-auto mb-4 border border-aer-accent-gold/30 rounded flex items-center justify-center">
+                <svg className="w-8 h-8 text-aer-accent-gold/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
               </div>
+              <p className="aer-ui-text text-aer-text-muted text-xs">
+                {project.name.toUpperCase()}
+              </p>
             </div>
-          ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <div className="text-center">
-                <span className="aer-numeral text-6xl text-aer-accent-gold/30">
-                  {String(project.id).padStart(2, '0')}
-                </span>
-                <p className="aer-ui-text text-aer-text-muted mt-2">
-                  {project.name.toUpperCase()}
-                </p>
-              </div>
-            </div>
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-aer-bg-primary/80 via-transparent to-transparent" />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-t from-aer-bg-primary/60 via-transparent to-transparent" />
         </div>
 
         <div className="p-6 space-y-4">
@@ -51,13 +40,6 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             <h3 className="text-xl aer-headline">{project.name}</h3>
             <p className="aer-body text-sm">{project.description}</p>
           </div>
-
-          {/* AI Integration Badge */}
-          {project.aiIntegration && (
-            <div className="inline-flex items-center px-3 py-1 border border-aer-accent-gold text-aer-accent-gold text-xs aer-ui-text">
-              AI • {project.aiIntegration.toUpperCase()}
-            </div>
-          )}
 
           {/* Tech Stack */}
           <div className="flex flex-wrap gap-2">
@@ -77,7 +59,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                 rel="noopener noreferrer"
                 whileHover={{ y: -1 }} 
                 whileTap={{ scale: 0.98 }} 
-                className="aer-button-secondary flex-1 py-3 text-xs inline-block text-center"
+                className="aer-button-secondary flex-1 py-3 text-xs inline-block text-center transition-all duration-200 hover:border-aer-text-secondary"
               >
                 <div className="flex items-center justify-center">
                   <svg className="mr-2 h-3 w-3" viewBox="0 0 24 24" fill="currentColor">
@@ -88,19 +70,19 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               </motion.a>
             )}
             <motion.div whileHover={{ y: -1 }} whileTap={{ scale: 0.98 }} className="flex-1">
-              {project.liveUrl === '#' ? (
-                <div className="w-full py-3 text-xs text-center aer-button-secondary opacity-50 cursor-not-allowed">
-                  COMING SOON
-                </div>
-              ) : (
+              {project.liveUrl && project.liveUrl !== '#' ? (
                 <a 
                   href={project.liveUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="aer-button-primary w-full py-3 text-xs inline-block text-center"
+                  className="aer-button-primary w-full py-3 text-xs inline-block text-center transition-all duration-200 hover:shadow-lg hover:shadow-aer-accent-gold/20"
                 >
                   LIVE DEMO
                 </a>
+              ) : (
+                <div className="w-full py-3 text-xs text-center aer-button-secondary opacity-50 cursor-not-allowed">
+                  COMING SOON
+                </div>
               )}
             </motion.div>
           </div>

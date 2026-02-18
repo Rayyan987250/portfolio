@@ -577,7 +577,7 @@ export default function AdminDashboard() {
                   <h2 className="text-2xl aer-headline">Projects Management</h2>
                   <button 
                     onClick={() => setShowProjectForm(true)}
-                    className="aer-button-primary px-6 py-3 flex items-center space-x-2"
+                    className="aer-button-primary px-6 py-3 flex items-center space-x-2 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-aer-accent-gold/20"
                   >
                     <Plus className="w-4 h-4" />
                     <span>ADD PROJECT</span>
@@ -615,13 +615,13 @@ export default function AdminDashboard() {
                           </div>
                           <div className="flex items-center space-x-4 text-sm text-aer-text-muted">
                             {project.github_url && (
-                              <a href={project.github_url} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-1 hover:text-aer-accent-gold">
+                              <a href={project.github_url} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-1 hover:text-aer-accent-gold transition-all duration-200 hover:scale-105">
                                 <Github className="w-4 h-4" />
                                 <span>GitHub</span>
                               </a>
                             )}
                             {project.live_url && (
-                              <a href={project.live_url} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-1 hover:text-aer-accent-gold">
+                              <a href={project.live_url} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-1 hover:text-aer-accent-gold transition-all duration-200 hover:scale-105">
                                 <ExternalLink className="w-4 h-4" />
                                 <span>Live Demo</span>
                               </a>
@@ -631,13 +631,15 @@ export default function AdminDashboard() {
                         <div className="flex items-center space-x-2">
                           <button
                             onClick={() => setEditingProject(project)}
-                            className="p-2 text-aer-text-muted hover:text-aer-accent-gold transition-colors"
+                            className="p-2 text-aer-text-muted hover:text-aer-accent-gold transition-all duration-200 hover:scale-110 active:scale-95 rounded hover:bg-aer-accent-gold/10"
+                            title="Edit Project"
                           >
                             <Edit className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => handleDeleteProject(project.id)}
-                            className="p-2 text-aer-text-muted hover:text-red-400 transition-colors"
+                            className="p-2 text-aer-text-muted hover:text-red-400 transition-all duration-200 hover:scale-110 active:scale-95 rounded hover:bg-red-400/10"
+                            title="Delete Project"
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>
@@ -653,7 +655,7 @@ export default function AdminDashboard() {
                       <p className="text-aer-text-muted aer-body mb-4">Create your first project to get started</p>
                       <button 
                         onClick={() => setShowProjectForm(true)}
-                        className="aer-button-primary px-6 py-3"
+                        className="aer-button-primary px-6 py-3 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-aer-accent-gold/20"
                       >
                         ADD YOUR FIRST PROJECT
                       </button>
@@ -673,7 +675,7 @@ export default function AdminDashboard() {
                   <h2 className="text-2xl aer-headline">Skills Management</h2>
                   <button 
                     onClick={() => setShowSkillForm(true)}
-                    className="aer-button-primary px-6 py-3 flex items-center space-x-2"
+                    className="aer-button-primary px-6 py-3 flex items-center space-x-2 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-aer-accent-gold/20"
                   >
                     <Plus className="w-4 h-4" />
                     <span>ADD SKILL</span>
@@ -694,13 +696,15 @@ export default function AdminDashboard() {
                         <div className="flex items-center space-x-2">
                           <button
                             onClick={() => setEditingSkill(skill)}
-                            className="p-1 text-aer-text-muted hover:text-aer-accent-gold transition-colors"
+                            className="p-1 text-aer-text-muted hover:text-aer-accent-gold transition-all duration-200 hover:scale-110 active:scale-95 rounded hover:bg-aer-accent-gold/10"
+                            title="Edit Skill"
                           >
                             <Edit className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => handleDeleteSkill(skill.id)}
-                            className="p-1 text-aer-text-muted hover:text-red-400 transition-colors"
+                            className="p-1 text-aer-text-muted hover:text-red-400 transition-all duration-200 hover:scale-110 active:scale-95 rounded hover:bg-red-400/10"
+                            title="Delete Skill"
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>
@@ -734,7 +738,7 @@ export default function AdminDashboard() {
                       <p className="text-aer-text-muted aer-body mb-4">Add your technical skills to showcase your expertise</p>
                       <button 
                         onClick={() => setShowSkillForm(true)}
-                        className="aer-button-primary px-6 py-3"
+                        className="aer-button-primary px-6 py-3 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-aer-accent-gold/20"
                       >
                         ADD YOUR FIRST SKILL
                       </button>
@@ -920,7 +924,8 @@ export default function AdminDashboard() {
                   setShowProjectForm(false);
                   setEditingProject(null);
                 }}
-                className="p-2 text-aer-text-muted hover:text-aer-accent-gold transition-colors"
+                className="p-2 text-aer-text-muted hover:text-aer-accent-gold transition-all duration-200 hover:scale-110 active:scale-95 rounded hover:bg-aer-accent-gold/10"
+                title="Close"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -961,7 +966,8 @@ export default function AdminDashboard() {
                   setShowSkillForm(false);
                   setEditingSkill(null);
                 }}
-                className="p-2 text-aer-text-muted hover:text-aer-accent-gold transition-colors"
+                className="p-2 text-aer-text-muted hover:text-aer-accent-gold transition-all duration-200 hover:scale-110 active:scale-95 rounded hover:bg-aer-accent-gold/10"
+                title="Close"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1005,7 +1011,6 @@ function ProjectForm({
     status: (project?.status || 'DRAFT') as 'DRAFT' | 'PUBLISHED' | 'ARCHIVED',
     githubUrl: project?.github_url || '',
     liveUrl: project?.live_url || '',
-    imageUrl: project?.image || '',
     featured: project?.featured || false,
     order: project?.order_index || 0,
   });
@@ -1020,7 +1025,6 @@ function ProjectForm({
       status: formData.status,
       githubUrl: formData.githubUrl || undefined,
       liveUrl: formData.liveUrl || undefined,
-      imageUrl: formData.imageUrl || undefined,
       featured: formData.featured,
       order: formData.order,
     };
@@ -1039,7 +1043,7 @@ function ProjectForm({
           required
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary placeholder-aer-text-muted focus:outline-none focus:border-aer-accent-gold"
+          className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary placeholder-aer-text-muted focus:outline-none focus:border-aer-accent-gold transition-all duration-200 hover:border-aer-text-muted"
           placeholder="Enter project name"
         />
       </div>
@@ -1053,7 +1057,7 @@ function ProjectForm({
           rows={4}
           value={formData.description}
           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-          className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary placeholder-aer-text-muted focus:outline-none focus:border-aer-accent-gold resize-none"
+          className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary placeholder-aer-text-muted focus:outline-none focus:border-aer-accent-gold resize-none transition-all duration-200 hover:border-aer-text-muted"
           placeholder="Describe your project"
         />
       </div>
@@ -1067,7 +1071,7 @@ function ProjectForm({
           required
           value={formData.techStack}
           onChange={(e) => setFormData({ ...formData, techStack: e.target.value })}
-          className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary placeholder-aer-text-muted focus:outline-none focus:border-aer-accent-gold"
+          className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary placeholder-aer-text-muted focus:outline-none focus:border-aer-accent-gold transition-all duration-200 hover:border-aer-text-muted"
           placeholder="React, TypeScript, Node.js (comma separated)"
         />
       </div>
@@ -1080,7 +1084,7 @@ function ProjectForm({
           <select
             value={formData.status}
             onChange={(e) => setFormData({ ...formData, status: e.target.value as 'DRAFT' | 'PUBLISHED' | 'ARCHIVED' })}
-            className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary focus:outline-none focus:border-aer-accent-gold"
+            className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary focus:outline-none focus:border-aer-accent-gold transition-all duration-200 hover:border-aer-text-muted cursor-pointer"
           >
             <option value="DRAFT">Draft</option>
             <option value="PUBLISHED">Published</option>
@@ -1096,7 +1100,7 @@ function ProjectForm({
             type="number"
             value={formData.order}
             onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) || 0 })}
-            className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary focus:outline-none focus:border-aer-accent-gold"
+            className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary focus:outline-none focus:border-aer-accent-gold transition-all duration-200 hover:border-aer-text-muted"
             placeholder="0"
           />
         </div>
@@ -1110,7 +1114,7 @@ function ProjectForm({
           type="url"
           value={formData.githubUrl}
           onChange={(e) => setFormData({ ...formData, githubUrl: e.target.value })}
-          className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary placeholder-aer-text-muted focus:outline-none focus:border-aer-accent-gold"
+          className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary placeholder-aer-text-muted focus:outline-none focus:border-aer-accent-gold transition-all duration-200 hover:border-aer-text-muted"
           placeholder="https://github.com/username/repo"
         />
       </div>
@@ -1123,21 +1127,8 @@ function ProjectForm({
           type="url"
           value={formData.liveUrl}
           onChange={(e) => setFormData({ ...formData, liveUrl: e.target.value })}
-          className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary placeholder-aer-text-muted focus:outline-none focus:border-aer-accent-gold"
+          className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary placeholder-aer-text-muted focus:outline-none focus:border-aer-accent-gold transition-all duration-200"
           placeholder="https://your-project.com"
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm aer-ui-text text-aer-text-secondary mb-2">
-          IMAGE URL
-        </label>
-        <input
-          type="url"
-          value={formData.imageUrl}
-          onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-          className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary placeholder-aer-text-muted focus:outline-none focus:border-aer-accent-gold"
-          placeholder="https://example.com/project-image.jpg"
         />
       </div>
 
@@ -1158,13 +1149,13 @@ function ProjectForm({
         <button
           type="button"
           onClick={onCancel}
-          className="px-6 py-3 text-aer-text-muted hover:text-aer-text-primary transition-colors"
+          className="px-6 py-3 text-aer-text-muted hover:text-aer-text-primary transition-all duration-200 hover:scale-105 active:scale-95"
         >
           CANCEL
         </button>
         <button
           type="submit"
-          className="aer-button-primary px-6 py-3 flex items-center space-x-2"
+          className="aer-button-primary px-6 py-3 flex items-center space-x-2 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-aer-accent-gold/20"
         >
           <Save className="w-4 h-4" />
           <span>{project ? 'UPDATE' : 'CREATE'} PROJECT</span>
@@ -1187,14 +1178,23 @@ function SkillForm({
   const [formData, setFormData] = useState({
     name: skill?.name || '',
     level: skill?.level || 50,
-    category: skill?.category || 'Frontend',
+    category: skill?.category || 'FRONTEND',
     icon: skill?.icon || '',
     color: skill?.color || '',
     order: skill?.order_index || 0,
     visible: skill?.visible !== false,
   });
 
-  const categories = ['Frontend', 'Backend', 'AI', 'Tools', 'Database', 'DevOps', 'Mobile', 'Other'];
+  const categories = ['FRONTEND', 'BACKEND', 'AI_AGENTIC', 'TOOLS', 'DATABASE', 'DEVOPS'];
+  
+  const categoryDisplayNames: Record<string, string> = {
+    'FRONTEND': 'Frontend',
+    'BACKEND': 'Backend',
+    'AI_AGENTIC': 'AI / Agentic',
+    'TOOLS': 'Tools',
+    'DATABASE': 'Database',
+    'DEVOPS': 'DevOps'
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -1223,7 +1223,7 @@ function SkillForm({
           required
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary placeholder-aer-text-muted focus:outline-none focus:border-aer-accent-gold"
+          className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary placeholder-aer-text-muted focus:outline-none focus:border-aer-accent-gold transition-all duration-200 hover:border-aer-text-muted"
           placeholder="Enter skill name"
         />
       </div>
@@ -1254,10 +1254,10 @@ function SkillForm({
           <select
             value={formData.category}
             onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-            className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary focus:outline-none focus:border-aer-accent-gold"
+            className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary focus:outline-none focus:border-aer-accent-gold transition-all duration-200 hover:border-aer-text-muted cursor-pointer"
           >
             {categories.map(category => (
-              <option key={category} value={category}>{category}</option>
+              <option key={category} value={category}>{categoryDisplayNames[category]}</option>
             ))}
           </select>
         </div>
@@ -1270,7 +1270,7 @@ function SkillForm({
             type="number"
             value={formData.order}
             onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) || 0 })}
-            className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary focus:outline-none focus:border-aer-accent-gold"
+            className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary focus:outline-none focus:border-aer-accent-gold transition-all duration-200 hover:border-aer-text-muted"
             placeholder="0"
           />
         </div>
@@ -1284,7 +1284,7 @@ function SkillForm({
           type="text"
           value={formData.icon}
           onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
-          className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary placeholder-aer-text-muted focus:outline-none focus:border-aer-accent-gold"
+          className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary placeholder-aer-text-muted focus:outline-none focus:border-aer-accent-gold transition-all duration-200 hover:border-aer-text-muted"
           placeholder="Icon name or emoji"
         />
       </div>
@@ -1297,7 +1297,7 @@ function SkillForm({
           type="text"
           value={formData.color}
           onChange={(e) => setFormData({ ...formData, color: e.target.value })}
-          className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary placeholder-aer-text-muted focus:outline-none focus:border-aer-accent-gold"
+          className="w-full px-4 py-3 bg-aer-bg-primary border border-aer-border-subtle rounded text-aer-text-primary placeholder-aer-text-muted focus:outline-none focus:border-aer-accent-gold transition-all duration-200 hover:border-aer-text-muted"
           placeholder="#FF5733 or red"
         />
       </div>
@@ -1319,13 +1319,13 @@ function SkillForm({
         <button
           type="button"
           onClick={onCancel}
-          className="px-6 py-3 text-aer-text-muted hover:text-aer-text-primary transition-colors"
+          className="px-6 py-3 text-aer-text-muted hover:text-aer-text-primary transition-all duration-200 hover:scale-105 active:scale-95"
         >
           CANCEL
         </button>
         <button
           type="submit"
-          className="aer-button-primary px-6 py-3 flex items-center space-x-2"
+          className="aer-button-primary px-6 py-3 flex items-center space-x-2 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-aer-accent-gold/20"
         >
           <Save className="w-4 h-4" />
           <span>{skill ? 'UPDATE' : 'CREATE'} SKILL</span>

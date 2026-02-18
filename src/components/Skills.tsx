@@ -8,16 +8,15 @@ import {
   Server, 
   Brain, 
   Wrench,
-  Code2,
   Database,
-  Cpu,
-  GitBranch
+  Cpu
 } from 'lucide-react';
 import { apiService } from '@/lib/api';
 
 // Fallback skill data with proficiency levels
 const fallbackSkillsData = [
   { name: 'React/Next.js', level: 95 },
+  { name: 'React Native', level: 75 },
   { name: 'TypeScript', level: 92 },
   { name: 'Node.js/Express', level: 88 },
   { name: 'LangChain', level: 85 },
@@ -25,36 +24,20 @@ const fallbackSkillsData = [
   { name: 'Tailwind CSS', level: 90 },
 ];
 
-const skillCategories = [
-  {
-    title: 'Frontend',
-    icon: Monitor,
-    iconColor: 'text-blue-400',
-    skills: ['React / Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
-  },
-  {
-    title: 'Backend',
-    icon: Server,
-    iconColor: 'text-green-400',
-    skills: ['Node.js / Express', 'PostgreSQL', 'MongoDB'],
-  },
-  {
-    title: 'AI / Agentic Workflows',
-    icon: Brain,
-    iconColor: 'text-purple-400',
-    skills: ['LangChain', 'LangGraph'],
-  },
-  {
-    title: 'Tools',
-    icon: Wrench,
-    iconColor: 'text-orange-400',
-    skills: ['Git', 'Docker', 'AWS', 'Vercel', 'Figma'],
-  },
-];
+// Category icon mapping
+const categoryIcons: Record<string, { icon: any; color: string; displayName: string }> = {
+  'FRONTEND': { icon: Monitor, color: 'text-blue-400', displayName: 'Frontend' },
+  'BACKEND': { icon: Server, color: 'text-green-400', displayName: 'Backend' },
+  'AI_AGENTIC': { icon: Brain, color: 'text-purple-400', displayName: 'AI / Agentic' },
+  'TOOLS': { icon: Wrench, color: 'text-orange-400', displayName: 'Tools' },
+  'DATABASE': { icon: Database, color: 'text-cyan-400', displayName: 'Database' },
+  'DEVOPS': { icon: Cpu, color: 'text-red-400', displayName: 'DevOps' },
+};
 
 export default function Skills() {
   const [mounted, setMounted] = useState(false);
   const [skillsData, setSkillsData] = useState(fallbackSkillsData);
+  const [groupedSkills, setGroupedSkills] = useState<Record<string, any[]>>({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -68,13 +51,44 @@ export default function Skills() {
     const loadSkills = async () => {
       try {
         const response = await apiService.getSkills();
-        if (response.success && response.data && Array.isArray(response.data)) {
+        if (response.success && response.data) {
+          // Backend returns { skills: [], grouped: {} }
+          const skillsArray = response.data.skills || response.data;
+          const groupedData = response.data.grouped || {};
+          
+          // Filter only visible skills
+          const visibleSkills = Array.isArray(skillsArray) 
+            ? skillsArray.filter((skill: any) => skill.visible !== false)
+            : [];
+          
           // Transform backend data to chart format
-          const chartData = response.data.map((skill: any) => ({
+          const chartData = visibleSkills.map((skill: any) => ({
             name: skill.name,
-            level: skill.proficiency || skill.level || 80
+            level: skill.level || 80
           }));
           setSkillsData(chartData);
+
+          // If we have grouped data from backend, use it
+          if (Object.keys(groupedData).length > 0) {
+            setGroupedSkills(groupedData);
+          } else {
+            // Otherwise, group skills by category on frontend
+            const grouped = visibleSkills.reduce((acc: Record<string, any[]>, skill: any) => {
+              const category = skill.category || 'Other';
+              if (!acc[category]) {
+                acc[category] = [];
+              }
+              acc[category].push(skill);
+              return acc;
+            }, {});
+
+            // Sort skills within each category by order_index
+            Object.keys(grouped).forEach(category => {
+              grouped[category].sort((a, b) => (a.order_index || 0) - (b.order_index || 0));
+            });
+
+            setGroupedSkills(grouped);
+          }
         }
       } catch (error) {
         console.warn('Failed to load skills from backend, using fallback data:', error);
@@ -170,47 +184,58 @@ export default function Skills() {
           </div>
         </motion.div>
 
-        {/* Skill Categories */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {skillCategories.map((category, index) => {
-            const IconComponent = category.icon;
-            return (
-              <motion.div
-                key={category.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="aer-card h-full p-6 group hover:bg-aer-bg-tertiary transition-colors duration-300"
-              >
-                <div className="mb-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className={`p-2 rounded-sm bg-aer-bg-tertiary group-hover:bg-aer-bg-primary transition-colors duration-300`}>
-                      <IconComponent 
-                        className={`w-5 h-5 ${category.iconColor} group-hover:text-aer-accent-gold transition-colors duration-300`}
-                        strokeWidth={1.5}
-                      />
+        {/* Skill Categories - Dynamic from Backend */}
+        {loading ? (
+          <div className="flex items-center justify-center py-20">
+            <div className="text-aer-text-muted aer-body">Loading skills...</div>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {Object.entries(groupedSkills).map(([category, skills], index) => {
+              const categoryConfig = categoryIcons[category] || { icon: Wrench, color: 'text-gray-400', displayName: category };
+              const IconComponent = categoryConfig.icon;
+              
+              return (
+                <motion.div
+                  key={category}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="aer-card h-full p-6 group hover:bg-aer-bg-tertiary transition-colors duration-300"
+                >
+                  <div className="mb-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className={`p-2 rounded-sm bg-aer-bg-tertiary group-hover:bg-aer-bg-primary transition-colors duration-300`}>
+                        <IconComponent 
+                          className={`w-5 h-5 ${categoryConfig.color} group-hover:text-aer-accent-gold transition-colors duration-300`}
+                          strokeWidth={1.5}
+                        />
+                      </div>
+                      <h3 className="aer-headline text-lg">
+                        {categoryConfig.displayName.toUpperCase()}
+                      </h3>
                     </div>
-                    <h3 className="aer-headline text-lg">
-                      {category.title.toUpperCase()}
-                    </h3>
                   </div>
-                </div>
-                <div className="space-y-3">
-                  {category.skills.map((skill) => (
-                    <div
-                      key={skill}
-                      className="flex items-center justify-between py-2 border-b border-aer-border-subtle last:border-b-0 group-hover:border-aer-accent-gold/20 transition-colors duration-300"
-                    >
-                      <span className="text-sm aer-body">{skill}</span>
-                      <div className="w-2 h-2 bg-aer-accent-gold opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
+                  <div className="space-y-3">
+                    {skills.map((skill: any) => (
+                      <div
+                        key={skill.id}
+                        className="flex items-center justify-between py-2 border-b border-aer-border-subtle last:border-b-0 group-hover:border-aer-accent-gold/20 transition-colors duration-300"
+                      >
+                        <span className="text-sm aer-body">{skill.name}</span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-aer-accent-gold aer-numeral">{skill.level}%</span>
+                          <div className="w-2 h-2 bg-aer-accent-gold opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </section>
   );
